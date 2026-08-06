@@ -1,0 +1,24 @@
+{
+  "name": "K-Unsei (韓国式 四柱推命)",
+  "short_name": "K-Unsei",
+  "description": "生年月日だけで30種類の精密韓国式四柱推命を完全無料で解読。",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0B0A16",
+  "theme_color": "#0B0A16",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3286/3286386.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3286/3286386.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
