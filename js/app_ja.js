@@ -179,7 +179,7 @@
    const tWolGanIdx = (startWolGanMap[tGapjaIdx % 10] + (wolJiIdxMap[tEffMonth] - 2 + 12) % 12) % 10;
    const tWolGan = CHEONGAN[tWolGanIdx], tWolJi = JIJI[wolJiIdxMap[tEffMonth]];
    const headerDateSpan = document.getElementById('header-today-date');
-   if (headerDateSpan) headerDateSpan.innerHTML = `基準日: <strong class="text-amber-400">${tYear}年 ${tMonth}月 ${tDay}日</strong> (${tNyeonGan.name}${tNyeonJi.name}年 · ${tWolGan.name}${tWolJi.name}月)`;
+   if (headerDateSpan) headerDateSpan.innerHTML = `基準日: <strong class="text-amber-400">${tYear}年 ${tMonth}月 ${tDay}日</strong> (${tNyeonGan.han}${tNyeonJi.han}年 · ${tWolGan.han}${tWolJi.han}月)`;
 
    const yearSelect = document.getElementById('birth-year'), monthSelect = document.getElementById('birth-month'), daySelect = document.getElementById('birth-day');
    const pYear = document.getElementById('partner-year'), pMonth = document.getElementById('partner-month'), pDay = document.getElementById('partner-day');
@@ -189,7 +189,7 @@
    // オプション初期化防止を 위亥 기존 하드코딩 옵션 외 동적 채우기
    for (let y = tYear; y >= 1930; y--) {
     const gapjaIdx = (y - 4 + 6000) % 60; const gan = CHEONGAN[gapjaIdx % 10], ji = JIJI[gapjaIdx % 12];
-    const yearLabel = `${y}年 (${gan.name}${ji.name}年 · ${ji.animal}年)`;
+    const yearLabel = `${y}年 (${gan.han}${ji.han}年 · ${ji.animal}年)`;
     const opt = document.createElement('option'); opt.value = y; opt.textContent = yearLabel; if (y === 1992) opt.selected = true; yearSelect.appendChild(opt);
     if (pYear) { const optP = document.createElement('option'); optP.value = y; optP.textContent = yearLabel; if (y === 1990) optP.selected = true; pYear.appendChild(optP); }
    }
@@ -422,7 +422,7 @@
    const nowGapjaIdx = (nowYr - 4 + 6000) % 60;
    const nowGan = CHEONGAN[nowGapjaIdx % 10], nowJi = JIJI[nowGapjaIdx % 12];
    document.getElementById('res-user-title').textContent = `${saju.solDateStr} 生まれ ${genderStr}の 四柱推命`;
-   document.getElementById('res-user-subtitle').textContent = `日本 나が ${koreanAge}歳 (満 ${manAge}歳) · 大運 ${isForward ? '順行' : '逆行'} (${daeunStartAge}歳開始) · 鑑定基準: ${nowYr}年 ${nowGan.name}${nowJi.name}年`;
+   document.getElementById('res-user-subtitle').textContent = `日本 나が ${koreanAge}歳 (満 ${manAge}歳) · 大運 ${isForward ? '順行' : '逆行'} (${daeunStartAge}歳開始) · 鑑定基準: ${nowYr}年 ${nowGan.han}${nowJi.han}年`;
 
    const ilGan = CHEONGAN[saju.il.ganIdx], ilJi = JIJI[saju.il.jiIdx];
    document.getElementById('res-il-title').textContent = `${saju.il.name} (${saju.il.han})`;
@@ -517,7 +517,7 @@
    
    const overList_ja = overList.map(o => OHENG_JA_MAP[o] || o);
    const zeroList_ja = zeroList.map(o => OHENG_JA_MAP[o] || o);
-   let html = `<p class="text-amber-300 font-semibold">🌟 生まれ持った核心守護エネルギー（日干）：<strong class="text-white">${ilGan.name}(${OHENG_JA_MAP[ilGan.oheng]})</strong></p><p class="text-gray-300">あなたは命式の主であり自分自身である日干が <strong>${OHENG_JA_MAP[ilGan.oheng]}(${ilGan.han})</strong> のエネルギーを根としており、その五行特有の性質が気質全般に深く染み込んでいます。</p>`;
+   let html = `<p class="text-amber-300 font-semibold">🌟 生まれ持った核心守護エネルギー（日干）：<strong class="text-white">${ilGan.han}(${OHENG_JA_MAP[ilGan.oheng]})</strong></p><p class="text-gray-300">あなたは命式の主であり自分自身である日干が <strong>${OHENG_JA_MAP[ilGan.oheng]}(${ilGan.han})</strong> のエネルギーを根としており、その五行特有の性質が気質全般に深く染み込んでいます。</p>`;
    if (overList.length > 0) html += `<p class="text-rose-300 pt-1">🔥 <strong>過多な五行 (${overList_ja.join(', ')})</strong>: 命式の3つ以上の文字が1つのエネルギーに偏っています。偏った気質は性格の頑固さになりやすく、またその五行が司る臓腑 of 疲労として現れやすいため、不足している部分を補いバランスを整える開運生活が必要です。</p>`; else html += `<p class="text-emerald-300 pt-1">✅ <strong>過多な五行なし</strong>: どこか一方に大きく偏ることなく、エネルギーの配合が滑らかに調和した命式です。</p>`;
    if (zeroList.length > 0) html += `<p class="text-blue-300 pt-1">💧 <strong>不足している五行 (${zeroList_ja.join(', ')})</strong>: 四柱八字の中にこのエネルギーの文字が見当たりません。大運やその年の運気でこの五行が入ってくると滞っていたものが解消され、普段から該当する色や方向を身の回りに置くとその時期を早める効果があります。</p>`; else html += `<p class="text-emerald-300 pt-1">✅ <strong>五行完備</strong>: 5つの五行が命式の中に満遍なく収まっています。どのような環境に置かれても自分の立ち位置を見つけ、困難に遭遇しても乗り越える力が強い構成です。</p>`;
    const myDeep = OHENG_DETAIL[OHENG_JA_MAP[ilGan.oheng]];
@@ -632,7 +632,7 @@
    const deep = ILJU_DETAIL[iljuName];
    if (deep) coreHtml += `<p class="pt-2 text-gray-300 leading-relaxed">${deep}</p>`;
    const ganDeep = GAN_DETAIL[ilGan.han], jiDeep = JI_DETAIL[ilJi.han];
-   if (ganDeep) coreHtml += `<p class="pt-2 text-gray-400 leading-relaxed"><strong class="text-amber-300">[日干 ${ilGan.name}${ilGan.han} 深層解読]</strong> ${ganDeep}</p>`;
+   if (ganDeep) coreHtml += `<p class="pt-2 text-gray-400 leading-relaxed"><strong class="text-amber-300">[日干 ${ilGan.han} 深層解読]</strong> ${ganDeep}</p>`;
    if (jiDeep) coreHtml += `<p class="pt-2 text-gray-400 leading-relaxed"><strong class="text-amber-300">[日支 ${ilJi.name}${ilJi.han} 深層解読]</strong> ${jiDeep}</p>`;
    document.getElementById('ilju-core-text').innerHTML = coreHtml;
    const strList = document.getElementById('ilju-strengths-list'); strList.innerHTML = ''; data.strengths.forEach(s => strList.innerHTML += `<li>${s}</li>`);
@@ -641,26 +641,40 @@
   }
 
   function renderDaeun(saju, isForward, daeunStartAge, manAge) {
-   document.getElementById('daeun-info-badge').textContent = `${isForward ? '順行 (順行)' : '逆行 (逆行)'} · 満 ${daeunStartAge}歳から開始`;
-   const timelineGrid = document.getElementById('daeun-timeline-grid'); timelineGrid.innerHTML = '';
-   const baseWolGanIdx = saju.wol.ganIdx, baseWolJiIdx = saju.wol.jiIdx; let currentDaeunObj = null;
+    const timelineGrid = document.getElementById("daeun-timeline-grid"); timelineGrid.innerHTML = "";
+    const baseWolGanIdx = saju.wol.ganIdx, baseWolJiIdx = saju.wol.jiIdx; let currentDaeunObj = null;
 
-   for (let i = 1; i <= 8; i++) {
-    const step = isForward ? i : -i;
-    const ganIdx = (baseWolGanIdx + step + 60) % 10, jiIdx = (baseWolJiIdx + step + 60) % 12;
-    const gan = CHEONGAN[ganIdx], ji = JIJI[jiIdx];
-    const startAge = daeunStartAge + (i - 1) * 10, endAge = startAge + 9;
-    const isCurrent = (manAge >= startAge && manAge <= endAge) || (i === 4 && !currentDaeunObj);
-    if (isCurrent) currentDaeunObj = { title: `${gan.name}${ji.name}(${gan.han}${ji.han}) 大運`, ageRange: `満 ${startAge}歳 〜 ${endAge}歳`, ganjiHan: `${gan.han}${ji.han}`, ganSipsin: getSipsin(saju.il.ganIdx, gan.oheng, ganIdx%2===0), jiSipsin: getJiSipsin(saju.il.ganIdx, jiIdx) };
+    for (let i = 1; i <= 8; i++) {
+     const step = isForward ? i : -i;
+     const ganIdx = (baseWolGanIdx + step + 60) % 10, jiIdx = (baseWolJiIdx + step + 60) % 12;
+     const gan = CHEONGAN[ganIdx], ji = JIJI[jiIdx];
+     const startAge = daeunStartAge + (i - 1) * 10, endAge = startAge + 9;
+     const isCurrent = (manAge >= startAge && manAge <= endAge) || (i === 4 && !currentDaeunObj);
 
-    timelineGrid.innerHTML += `<div class="glass-card rounded-xl p-4 transition border flex flex-col justify-between ${isCurrent ? 'border-2 border-amber-500 bg-amber-500/10 shadow-lg' : 'border-white/10 hover:border-white/30'}"><div class="flex justify-between items-center text-xs pb-2 border-b border-white/10"><span class="font-bold ${isCurrent ? 'text-amber-400 ' : 'text-gray-400'}">${i}大運 (${startAge}~${endAge}歳)</span><span>⭐⭐⭐⭐</span></div><div class="my-3 text-center"><div class="font-serif-kr font-bold text-2xl sm:text-3xl text-white">${gan.han}${ji.han}</div><div class="text-xs font-bold mt-1 ${gan.textClass}">${gan.name}(${gan.oheng}) · ${ji.name}(${ji.oheng})</div></div><div class="text-[11px] bg-white/5 rounded px-2 py-1 flex justify-between text-gray-300"><span>天干: ${getSipsin(saju.il.ganIdx, gan.oheng, ganIdx%2===0)}</span><span>地支: ${getJiSipsin(saju.il.ganIdx, jiIdx)}</span></div></div>`;
+     const ganSipsinJa = SIPSIN_JA_MAP[getSipsin(saju.il.ganIdx, gan.oheng, ganIdx%2===0)] || getSipsin(saju.il.ganIdx, gan.oheng, ganIdx%2===0);
+     const jiSipsinJa = SIPSIN_JA_MAP[getJiSipsin(saju.il.ganIdx, jiIdx)] || getJiSipsin(saju.il.ganIdx, jiIdx);
+
+     if (isCurrent) {
+       currentDaeunObj = { 
+         title: `${gan.han}${ji.han} 大運`, 
+         ageRange: `満 ${startAge}歳 〜 ${endAge}歳`, 
+         ganjiHan: `${gan.han}${ji.han}`, 
+         ganSipsin: ganSipsinJa, 
+         jiSipsin: jiSipsinJa 
+       };
+     }
+
+     const itemGanSipsin = SIPSIN_JA_MAP[getSipsin(saju.il.ganIdx, gan.oheng, ganIdx%2===0)] || getSipsin(saju.il.ganIdx, gan.oheng, ganIdx%2===0);
+     const itemJiSipsin = SIPSIN_JA_MAP[getJiSipsin(saju.il.ganIdx, jiIdx)] || getJiSipsin(saju.il.ganIdx, jiIdx);
+
+     timelineGrid.innerHTML += `<div class="glass-card rounded-xl p-4 transition border flex flex-col justify-between ${isCurrent ? "border-2 border-amber-500 bg-amber-500/10 shadow-lg" : "border-white/10 hover:border-white/30"}"><div class="flex justify-between items-center text-xs pb-2 border-b border-white/10"><span class="font-bold ${isCurrent ? "text-amber-400 " : "text-gray-400"}">${i}大運 (${startAge}~${endAge}歳)</span><span>⭐⭐⭐⭐</span></div><div class="my-3 text-center"><div class="font-serif-kr font-bold text-2xl sm:text-3xl text-white">${gan.han}${ji.han}</div><div class="text-xs font-bold mt-1 ${gan.textClass}">${STEM_JA_MAP[gan.name] || gan.name} · ${BRANCH_JA_MAP[ji.name] || ji.name}</div></div><div class="text-[11px] bg-white/5 rounded px-2 py-1 flex justify-between text-gray-300"><span>天干: ${itemGanSipsin}</span><span>地支: ${itemJiSipsin}</span></div></div>`;
+    }
+
+    document.getElementById("current-daeun-title").textContent = `${currentDaeunObj.title} · ${currentDaeunObj.ganSipsin} / ${currentDaeunObj.jiSipsin}のテーマ`;
+    document.getElementById("current-daeun-desc").innerHTML = `現在あなたは、<strong>${currentDaeunObj.ganSipsin}(天干)</strong>がもたらす社会的な機会と、<strong>${currentDaeunObj.jiSipsin}(地支)</strong>が支える現実的なパワーが同時に動き出す貴重な時期を過ごしています。大運とは10年単位で新調する「季節の衣類」のようなものであり、同じ人であってもどの時期を通過するかによって運勢の体感温度は劇的に変化します。今の大運は、温めてきた計画を実行に移し、自己の足場を固めるのにまたとない絶好の跳躍期ですので、決断을（決断を）先延ばしにせず、この10年の間に勝負をかけることが運気の波に乗る最善の方法です。`;
    }
 
-   document.getElementById('current-daeun-title').textContent = `${currentDaeunObj.title} · ${currentDaeunObj.ganSipsin}/${currentDaeunObj.jiSipsin}のテーマ`;
-   document.getElementById('current-daeun-desc').innerHTML = `現在あなたは、<strong>${currentDaeunObj.ganSipsin}(天干)</strong>がもたらす社会的な機会と、<strong>${currentDaeunObj.jiSipsin}(地支)</strong>が支える現実的なパワーが同時に動き出す貴重な時期を過ごしています。大運とは10年単位で新調する「季節の衣類」のようなものであり、同じ人であってもどの時期を通過するかによって運勢の体感温度は劇的に変化します。今の大運は、温めてきた計画を実行に移し、自己の足場を固めるのにまたとない絶好の跳躍期ですので、決断を先延ばしにせず、この10年の間に勝負をかけることが運気の波に乗る最善の方法です。`;
-  }
-
-  function renderSeunAndGuide(saju, ilGan, ilJi) {
+   function renderSeunAndGuide(saju, ilGan, ilJi) {
    
    document.getElementById('seun-general-text').innerHTML = `<p class="text-amber-300 font-bold mb-1">🔥 2026年 丙午（ひのえうま）歳運核心：火気エネルギーの強力な活性化</p><p>天干と地支の双方に「火」が重なる、情熱的な赤い馬の年です。内に秘めていた才能が一気に開花して表舞台に現れ、活動のステージが大きく広がる躍動的な運気です。</p>`;
    document.getElementById('seun-job-text').textContent = `あなたの実力がスポットライトを浴び、名声が高まる時期です。現在取り組んでいるプロジェクトが実を結び、正当な評価や感謝を受け取る機会が何度も訪れます。目立つ功績ほど、今年は光の当たる場所へと押し上げられます。成果を可視化した資料をあらかじめ用意しておくと、チャンスが巡ってきた際、すぐにそれを掴み取ることができます。上半期の小さな信頼が、下半期の大規模なオファーへとつながりやすい好循環の時期です。発表、プレゼンテーション、面接といった自己表現の場を避けることなく、積極的に手を挙げてください。火のエネルギーが巡る今年は、前に出る人へとあらゆるスポットライトが集まります。`;
@@ -794,9 +808,9 @@
    
    
    
-   document.getElementById('career-pass-desc').innerHTML = `2026年合格・昇進指数 <strong class="text-emerald-300">89%（大吉）</strong>。今年の丙午（ひのえうま）年がもたらす強力な火のエネルギーが、あなたの日干 ${ilGan.name}(${OHENG_JA_MAP[ilGan.oheng] || ilGan.oheng})と美しく調和し、飛躍の架け橋を架けてくれます。あなたを助ける官星（社会的名誉・昇進）のエネルギーと学問運（資格・試験）が相乗効果を生み出し、実力を最大限に発揮できる素晴らしい時期です。試験においてはこれまでの努力以上の成果が発揮され、人事面においては上役や重要な人物から高い評価を得られます。特に、<strong>火気の高まる5月〜9月</strong>は、面接・発表・昇進審査における決定的な勝負時となります。提出書類の細部まで確認を徹底することが、成功を100%確実にする鍵となります。`;
+   document.getElementById('career-pass-desc').innerHTML = `2026年合格・昇進指数 <strong class="text-emerald-300">89%（大吉）</strong>。今年の丙午（ひのえうま）年がもたらす強力な火のエネルギーが、あなたの日干 ${ilGan.han}(${OHENG_JA_MAP[ilGan.oheng] || ilGan.oheng})と美しく調和し、飛躍の架け橋を架けてくれます。あなたを助ける官星（社会的名誉・昇進）のエネルギーと学問運（資格・試験）が相乗効果を生み出し、実力を最大限に発揮できる素晴らしい時期です。試験においてはこれまでの努力以上の成果が発揮され、人事面においては上役や重要な人物から高い評価を得られます。特に、<strong>火気の高まる5月〜9月</strong>は、面接・発表・昇進審査における決定的な勝負時となります。提出書類の細部まで確認を徹底することが、成功を100%確実にする鍵となります。`;
    document.getElementById('career-org-desc').innerHTML = `あなたの社会運は、<strong class="text-amber-300">${SIPSIN_JA_MAP[cSipsin] || cSipsin}</strong>の気が強く影響しています。月支は社会生活の舞台であり、働き方の傾向を示す場所ですが、この配置から見ると、あなたは指示通りにただ動く環境よりも、<strong>自ら判断し裁量を発揮できる場所</strong>で数倍の成果をあげます。具体的には、大企業の新規タスクフォースやプロジェクトチーム、専門的なスキルが発言権を持つスペシャリスト集団、あるいは個人の裁量が大きい外資系・スタートアップなどが最適な舞台です。逆に行政手続きが多く前例を極重視する硬直した組織では、フラストレーションが溜まり才能を半分も発揮できません。転機を検討する際は、条件だけでなく<strong>「自分自身の裁量が認められる環境か」</strong>を第一の基準とすることをお勧めします。`;
-   document.getElementById('career-jobs-desc').innerHTML = `日干 ${ilGan.name}(${OHENG_JA_MAP[ilGan.oheng] || ilGan.oheng})と月支 ${SIPSIN_JA_MAP[cSipsin] || cSipsin}のエネルギーの組み合わせから選定した、最適な職業天職です。<br><strong>① ITサービス・新規事業企画<br>② 資産運用・金融データ分析<br>③ 専門コンサルタント・アドバイザー<br>④ グローバル貿易・海外マーケティング</strong><br>これらはすべて、あなたの先見の明と鋭い分析力が武器となる分野です。現在のお仕事がこのリストにない場合でも焦る必要はありません。今の業務の中で「企画」「分析」「交渉」の比重を少しずつ増やしていくことで、運命の舵を自然に天職の方向へと切ることができます。`;
+   document.getElementById('career-jobs-desc').innerHTML = `日干 ${ilGan.han}(${OHENG_JA_MAP[ilGan.oheng] || ilGan.oheng})と月支 ${SIPSIN_JA_MAP[cSipsin] || cSipsin}のエネルギーの組み合わせから選定した、最適な職業天職です。<br><strong>① ITサービス・新規事業企画<br>② 資産運用・金融データ分析<br>③ 専門コンサルタント・アドバイザー<br>④ グローバル貿易・海外マーケティング</strong><br>これらはすべて、あなたの先見の明と鋭い分析力が武器となる分野です。現在のお仕事がこのリストにない場合でも焦る必要はありません。今の業務の中で「企画」「分析」「交渉」の比重を少しずつ増やしていくことで、運命の舵を自然に天職の方向へと切ることができます。`;
   }
 
   function renderLuckyNumMastery(ilGan) {
@@ -1566,7 +1580,7 @@
   function getIljuFallback(ilGan, ilJi) {
     return {
        desc: '天からは ' + ilGan.name + '(' + OHENG_JA_MAP[ilGan.oheng] + ')の気質が、地からは ' + ilJi.animal + 'の気質が交わり、互いを支え合う素晴らしい宿命の構造です。自立心に満ち、自ら目標を定めて着実に結果を残せる頼もしい実行力に恵まれています。',
-       strengths: ['天干 ' + ilGan.name + 'の明確な自尊心', '地支 ' + ilJi.animal + 'の圧倒的な底力', '自分なりのアプローチで成果を出す創造力'],
+       strengths: ['天干 ' + ilGan.han + 'の明確な自尊心', '地支 ' + ilJi.animal + 'の圧倒的な底力', '自分なりのアプローチで成果を出す創造力'],
        weaknesses: ['一つの価値観に偏りやすい時は焦らないこと', '疲労が溜まった時は十分に睡眠をとること'],
        job: ilGan.oheng + 'の気流と ' + ilJi.oheng + 'の気流を共に活かせる、企画・運営、専門職、マネジメントに適しています。自ら意思決定できるポジションで最大の成果を発揮します。',
        love: '互いのプライベートを尊重し、信頼をベースにした関係を築きます。穏やかに深まる愛情が長続きの秘訣です。',
