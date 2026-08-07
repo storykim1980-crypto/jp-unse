@@ -20,6 +20,85 @@
 
   let GAN_DETAIL = {}, JI_DETAIL = {}, OHENG_DETAIL = {}, SIPSIN_DAILY = {}, ILJU_DETAIL = {};
 
+  const ZODIAC_ANIMAL_DATA_JA = {
+    "子": { emoji: "🐭", name: "子 (ねずみ)", desc: "知恵が湧き出て、澄んだ泉のように穏やかな一日です。他者と争うのではなく一歩譲ることで、思いがけない大きな人徳と貴重な幸運を掴める気運ですので、広い心を持って過ごしてください。幸運のカラーはネイビー、午後2時〜4時の間に心地よい連絡が届きます。" },
+    "丑": { emoji: "🐮", name: "丑 (うし)", desc: "雄牛のように粘り強い努力が、ついに周囲からの称賛と実利ある金銭的な見返りとして実を結ぶ大吉日です！焦らず着実に内面を磨いてきた行動が、人生を支える強固な土台となるでしょう。幸運の方角は東です。" },
+    "寅": { emoji: "🐯", name: "寅 (とら)", desc: "勇猛で堂々とし、新たな挑戦を迎える夜明けの虎です。堂々とした推進力と企画力が良く、他人の下で働くのではなく、独自のビジネスに適しています。幸運의 数字는 3과 8입니다." },
+    "卯": { emoji: "🐰", name: "卯 (うさぎ)", desc: "あなたの芸術的感受性と温かい気配りが、周囲の人間関係を優しく調和させる日です。丁寧な対話によって滞っていた契約がスムーズに成立し、思わぬ食福が伴う穏やかな一日となるでしょう。幸運のカラーはグリーンです。" },
+    "辰": { emoji: "🐲", name: "辰 (たつ)", desc: "天を舞う青龍のように、広大な志とアイデアが頭脳の中で華々しく輝く一等星の日です！委縮することなく、広いステージであなたの実力を遺憾なく発揮し、自身を誇り高くセールスしてください。幸運のカラーはゴールドです。" },
+    "巳": { emoji: "🐍", name: "巳 (へび)", desc: "鋭い頭脳の回転 and 臨機応変な対応により、厄介なトラブルやシステムの問題を瞬時に解決する救世主のような一日です。人々の複雑な心理を見抜く力に長けており、カウンセリングやアドバイス業務に大吉です。幸運の時間は午前9時〜11時です。" },
+    "午": { emoji: "🐴", name: "午 (うま)", desc: "草原を駆け抜ける馬のように気持ちが晴れやかになり、表現力が大爆発する日です。感情を隠さず素直に表現することで人気が急上昇し、周囲があなたの魅力に惹きつけられます。幸運の小物は洗練された時計やアクセサリーです。" },
+    "未": { emoji: "🐑", name: "未 (ひつじ)", desc: "草原の穏やかで温かい羊のように温情が溢れ、周囲의 傷ついた人々を気遣う思いやりが光る日です。誠実に義理を守ることで、将来あなたを一生助けてくれる頼もしい貴人（メンター）とのご縁を結びます。幸運の方角は南西です。" },
+    "申": { emoji: "🐵", name: "申 (さる)", desc: "天才的な話術と手先の器用さで、不可能に見えた取引を鮮やかに成立させるビジネスの王者の日です！臨機応変さが最高潮に達するため、積極的にミーティングを計画してみてください。幸運の数字は4と9です。" },
+    "酉": { emoji: "🐔", name: "酉 (とり)", desc: "洗練された美意識とジュエリーのように鋭い集中力が際立つ大吉日です。溜まっていた書類を精巧に完成させ、細部をチェックするのに最適な日であり、端正な服装が大きな契約運を呼び込みます。幸運のカラーはシルバーです。" },
+    "戌": { emoji: "🐶", name: "戌 (いぬ)", desc: "弱者を思いやり、忠実に責任を果たすことで、厚い信頼が雪だるま式に膨らんでいく実りある一日です。誠実に役割を果たすと、上司からの推薦や嬉しい知らせが舞い込みます。幸運の方角は北西です。" },
+    "亥": { emoji: "🐷", name: "亥 (いのしし)", desc: "広大な湖のように心が広くなり、些細な葛藤を優しく水に流せる余裕のある平和な一日です。食福が豊富で、親しい人々と美味しい食事を共にする中で貴重な情報やビジネスチャンスが巡ってきます。幸運の数字は1と6です。" }
+  };
+
+  const ASTROLOGY_DATA_JA = {
+    "牡羊座": { emoji: "♈", desc: "内なる情熱とフロンティア精神が燃え上がる活気あふれる一日です！不可能に見えた分野に果敢に第一歩を踏み出すと、運が味方してくれます。幸運のツールは軽いスニーカーです。" },
+    "牡牛座": { emoji: "♉", desc: "黙々と自分の実利と財布の資産を安定的に計画・整理するのに最も適した日です。落ち着いた態度を保つことで金銭的な恩恵が伴うでしょう。幸運のカラーはベージュです。" },
+    "双子座": { emoji: "♊", desc: "ウィットに富んだ話術とトレンドを感じる情報センスで、あらゆる場の中心人物になる日です！今日交わす会話の中に、大きな成功のヒントが隠されています。幸運の数字は5です。" },
+    "蟹座": { emoji: "♋", desc: "感情が温かく安定し、家族や旧友と楽しい時間を過ごしたり、親しい電話を交わすのに適した日です。内側のエネルギーを充電することで運気が何倍にも上昇します。幸運のフードは甘いデザートです。" },
+    "獅子座": { emoji: "♌", desc: "堂々とした態度と隠せないスター性で、あらゆる場所のスポットライトを一身に浴びる魅力的な日です！ミーティングなどで主導的に意見を述べると拍手が湧き起こります。幸運のカラーはオレンジです。" },
+    "乙女座": { emoji: "♍", desc: "高度な分析力と几塵な仕上げが冴え、仕事の完成度がプロ級に高まる一日です。溜まっていた計画表を整理し、片付けをすると気の流れがスムーズになります。幸運のアイテムは手帳です。" },
+    "天秤座": { emoji: "♎", desc: "洗練された美意識とバランス感覚が完璧な調和を成す日です。難しい調整局面において素晴らしい解決策を提示し、あなたの評判が急上昇するでしょう。幸運の小物はほのかな香水です。" },
+    "蠍座": { emoji: "♏", desc: "鋭い洞察力と直感で、見えないチャンスや相手の本心を明確に見抜く神秘的な一日です。水面下でのビジネスの準備に幸運が宿ります。幸運の数字は7です。" },
+    "射手座": { emoji: "♐", desc: "狭い世界を抜け出し、広い宇宙を探求するようなフットワークの軽さと活力が満ちる日です！出張や旅行の計画を立てると運が開けます。幸運の方角は南です。" },
+    "山羊座": { emoji: "♑", desc: "一歩一歩着実に自分の実力を磨き、長期的なキャリアの目標に一歩近づく日です。責任感を持ってやり遂げた成果が生涯の資産となります。幸運の宝石はブラックストーンです。" },
+    "水瓶座": { emoji: "♒", desc: "型にはまった古い常識を打ち破る、自由で斬新なインスピレーションが光る一日です！あなただけのユニークな個性を恐れずに表現してください。幸運のカラーはネイビーです。" },
+    "魚座": { emoji: "♓", desc: "感受性が豊かになり、他人の痛みに寄り添う優しい慈悲が光る癒しの一日です。感性が活性化しているため、音楽やアートの鑑賞に幸運が宿ります。幸運の数字は2と12です。" }
+  };
+
+  const DAILY_BLOOD_DATA_JA = {
+    "A": {
+        emoji: "🅰️", name: "A型 (慎重/思慮)",
+        phrases: [
+            "今日は落ち着いた配慮と几帳面さが光り、周囲からの信頼が急上昇する日です。誠実さが最高の武器です。",
+            "小さな心配事やストレスは、温かいお茶を飲んでリフレッシュしましょう。午後3時頃に嬉しい知らせが届きます。",
+            "他人の話を親身になって聞くほど、あなたに重要な契約や良い展開が舞い込む素晴らしい一日です。",
+            "財布の紐はしっかり締めつつ、自分を癒す美味しいお茶には心地よく投資するのが幸運を呼び込みます。"
+        ]
+    },
+    "B": {
+        emoji: "🅱️", name: "B형 (자유/열정)",
+        emoji: "🅱️", name: "B型 (自由/情熱)",
+        phrases: [
+            "あなたの斬신한 아이디어와 유쾌한 유머 감각이 주변 분위기를 한없이 화기애애하게 주도해 나가는 주인공의 기상입니다.",
+            "あなたの斬新なアイデアと愉快なユーモアが周囲を明るくリードする、まさにあなたが主役の一日です。",
+            "周囲の固定観念に囚われず、やりたかった計画の第一歩を踏み出してください。ポジティブな行動が金運を呼び込みます。",
+            "軽いジョギングやウォーキングをすると気の巡りが軽やかになり、思わぬ嬉しい引き寄せが起こります。",
+            "気軽なおしゃべりや美味しい食事の席で、あなたを生涯助けてくれる貴人のヒントを得られる確率が非常に高いです。"
+        ]
+    },
+    "O": {
+        emoji: "🅾️", name: "O型 (親和/リーダーシップ)",
+        phrases: [
+            "周囲を明るく照らすポジティブな情熱と親しみやすい魅力が輝き、周囲の素晴らしい灯台となる大吉日です。",
+            "解決が難しかった問題や対立状況を、あなたのカリスマと包容力で鮮やかにまとめ上げる頼もしい一日です。",
+            "資金の循環가 부드럽게 돌아가기 시작하는 기분 좋은 하루입니다. 새로운 금융 포트폴리오를 구상하기에 최고의 날입니다.",
+            "資金の循環がスムーズに回り出す心地よい日です。新しい資産運用プランを考えるのに最適な日です。",
+            "お誘いや嬉しい知らせが届く運気です。感謝の気持ちを笑顔で表現するとさらに運気が高まります。"
+        ]
+    },
+    "AB": {
+        emoji: "🆎", name: "AB型 (芸術/直感)",
+        phrases: [
+            "他人が見落とす本질을 예리하게 간파해 내는 높은 지혜가 빛나, 복잡한 과제나 서류 정리를 단박에 해결하는 날입니다.",
+            "他人が見落とす本質を鋭く見抜く高い知性が光り、複雑な課題や書類整理を一瞬で片付けられる日です。",
+            "芸術的인스피레이션이 최고조에 달하니, 다이어리를 쓰거나 디자인을 다듬으면 놀라운 예술적 성취가 뒤따릅니다.",
+            "芸術的インスピレーションが冴え渡る日です。手帳を書いたりクリエイティブな活動をすると素晴らしい成果が得られます。",
+            "静かに 자신의 내실을 다질 때 최고의 운이 열립니다. 주변의 시끄러운 참견은 신경 쓰지 말고 자신의 직관을 신뢰하세요.",
+            "静かに自分の内面を磨くことで最高の運が開けます。周囲の雑音은 신경 쓰지 말고 자신의 직관을 신뢰하세요.",
+            "静かに自分の内面を磨くことで最高の運が開けます。周囲の雑音は気にせず、自分の直感を信じて進んでください。",
+            "睡眠 환경을 맑게 가꾸고, 마음에 드는 아로마나 향기를 가볍게 뿌리는 것만으로도 나쁜 액운을 물리치고 수호를 높일 수 있습니다.",
+            "睡眠環境を整え、お気に入りのアロマや香りを軽くまとうだけで、不要な厄災를 물리치고 수호를 높일 수 있습니다.",
+            "睡眠環境を整え、お気に入りのアロマや香りを軽くまとうだけで、不要な厄災を遠ざけ守護を高めることができます。"
+        ]
+    }
+  };
+
+
   const SIPSIN_JA_MAP = {
     "비견": "比肩", "겁재": "劫財", "식신": "食神", "상관": "傷官",
     "편재": "偏財", "정재": "正財", "편관": "偏官", "정관": "正官",
@@ -162,7 +241,7 @@
    return UNSEONG_NAMES[(ganIdx % 2 === 0) ? (jiIdx - startJi + 12) % 12 : (startJi - jiIdx + 12) % 12];
   }
 
-  let CURRENT_SAJU = null, isPanoramaMode = false, lastActiveTabId = 'tab-oheng';
+  let CURRENT_SAJU = null, isPanoramaMode = false, lastActiveTabId = 'tab-oheng', ACTIVE_SAJU_TAB_ID = 'oheng';
 
     
 
@@ -1209,97 +1288,142 @@
 
   const ZODIAC_LIST_JA = ["子 (ねずみ)", "丑 (うし)", "寅 (とら)", "卯 (うさぎ)", "辰 (たつ)", "巳 (へび)", "午 (うま)", "未 (ひつじ)", "申 (さる)", "酉 (とり)", "戌 (いぬ)", "亥 (いのしし)"];
   function generateZodiacButtons() {
-    const container = document.getElementById('zodiac-btn-grid');
+    const container = document.getElementById("zodiac-animal-container");
     if (!container) return;
     container.innerHTML = "";
-    ZODIAC_LIST_JA.forEach((z, i) => {
-        container.innerHTML += `<button type="button" onclick="showZodiacReading(${i})" class="p-3 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-500/30 text-xs text-gray-300 hover:text-white transition font-bold">${z.split(' ')[0]} ${z.split(' ')[1]}</button>`;
+    Object.entries(ZODIAC_ANIMAL_DATA_JA).forEach(([key, value]) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.onclick = () => showZodiacReading("animal", key);
+        btn.className = "flex flex-col items-center justify-center p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-amber-500/10 hover:border-amber-500/40 transition active:scale-95";
+        btn.innerHTML = `<span class="text-xl sm:text-2xl">${value.emoji}</span><span class="text-[10px] sm:text-xs font-bold text-gray-300 mt-1">${value.name}</span>`;
+        container.appendChild(btn);
     });
   }
 
-  const ASTROLOGY_LIST_JA = ["牡羊座", "牡牛座", "双子座", "蟹座", "獅子座", "乙女座", "天秤座", "蠍座", "射手座", "山羊座", "水瓶座", "魚座"];
   function generateAstrologyButtons() {
-    const container = document.getElementById('astrology-btn-grid');
+    const container = document.getElementById("astrology-container");
     if (!container) return;
     container.innerHTML = "";
-    ASTROLOGY_LIST_JA.forEach((a, i) => {
-        container.innerHTML += `<button type="button" onclick="showZodiacReading(${(i+4)%12})" class="p-3 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-500/30 text-xs text-gray-300 hover:text-white transition font-bold">${a}</button>`;
+    Object.entries(ASTROLOGY_DATA_JA).forEach(([key, value]) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.onclick = () => showZodiacReading("astrology", key);
+        btn.className = "flex flex-col items-center justify-center p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-amber-500/10 hover:border-amber-500/40 transition active:scale-95";
+        btn.innerHTML = `<span class="text-xl sm:text-2xl">${value.emoji}</span><span class="text-[10px] sm:text-xs font-bold text-gray-300 mt-1">${key}</span>`;
+        container.appendChild(btn);
     });
   }
 
-  const BLOOD_LIST_JA = ["A型", "B型", "O型", "AB型"];
   function generateBloodTypeButtons() {
-    const container = document.getElementById('blood-btn-grid');
+    const container = document.getElementById("bloodtype-container");
     if (!container) return;
     container.innerHTML = "";
-    BLOOD_LIST_JA.forEach((b, i) => {
-        container.innerHTML += `<button type="button" onclick="showBloodTypeReading(${i})" class="p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-500/30 text-sm text-gray-300 hover:text-white transition font-bold">${b}</button>`;
+    Object.entries(DAILY_BLOOD_DATA_JA).forEach(([key, value]) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.onclick = () => showBloodTypeReading(key);
+        btn.className = "flex flex-col items-center justify-center p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-amber-500/10 hover:border-amber-500/40 transition active:scale-95";
+        btn.innerHTML = `<span class="text-xl sm:text-2xl">${value.emoji}</span><span class="text-[10px] sm:text-xs font-bold text-gray-300 mt-1">${value.name}</span>`;
+        container.appendChild(btn);
     });
   }
 
-  function showZodiacReading(idx) {
-    const titleEl = document.getElementById('plaza-zodiac-title');
-    const descEl = document.getElementById('plaza-zodiac-desc');
-    const badgeEl = document.getElementById('plaza-zodiac-badge');
-    
-    const fortunes = [
-        "今日は予期せぬ喜びが訪れる最高の一日です。特に人間関係においてあなたの誠実さが認められ、強い信頼を築くことができます。",
-        "コツコツと積み重ねてきた努力がようやく実を結ぶ日です。自信を持って目の前の課題に取り組んでください。金運も好調です。",
-        "新しい挑戦を始めるのに最適な日です。迷っていたことがあれば、勇気を持って第一歩を踏み出してみましょう。幸運が背中を押してくれます。",
-        "周囲との協調が幸運を呼び込む日です。相手の立場に立った優しい配慮を見せることで、何倍もの幸福があなたに戻ってきます。",
-        "主導権を握って積極的に行動することで、大いなる成果を得られる日です。あなたのカリスマ性が輝きを放ち、人々を魅了します。",
-        "直感力が冴え渡る神秘的な日です。周囲の雑音に惑わされず、自分自身の内なる声を信じて決断すると良い結果に繋がります。"
+  function showZodiacReading(type, key) {
+    const resultBox = document.getElementById("zodiac-result-box");
+    const resEmoji = document.getElementById("zodiac-res-emoji");
+    const resTitle = document.getElementById("zodiac-res-title");
+    const resDesc = document.getElementById("zodiac-res-desc");
+    const resDate = document.getElementById("zodiac-res-date");
+    if (!resultBox || !resEmoji || !resTitle || !resDesc || !resDate) return;
+
+    const today = new Date();
+    resDate.textContent = `${today.getMonth() + 1}月 ${today.getDate()}日 今日の運勢`;
+    const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate() + key.charCodeAt(0);
+    const score = 75 + (seed % 25);
+
+    const conditionPhrases = [
+        "🌟 宇宙全体の気の流れがあなたに向けて優しく微笑みかける一日です。誠実な信頼が大きなチャンスを呼び込みます。",
+        "🍀 些細な譲り合いが、回り回って大きな人徳となって返ってくる日です。肩の力を抜くと運気の巡りが軽やかになります。",
+        "✨ 胸に温めてきた素晴らしいインスピレーションが、情熱的に開花する素晴らしい気運です。自身の直感を信じて進んでください。",
+        "💰 財布に実り豊かな利益がしっかりと蓄積され、心がこの上なく豊かになる堅実なエネルギーが満ちています。",
+        "🌈 少し距離のあった人間関係が、温かい対話の一言によって雪解けのようにスッキリと解決する調和の流れです。"
     ];
-    
-    titleEl.textContent = `🍀 今日のフォーチュン予報`;
-    descEl.textContent = fortunes[idx % fortunes.length];
-    badgeEl.textContent = "今日の運勢指数: " + (85 + (idx % 3) * 5) + "%（吉）";
-    document.getElementById('plaza-zodiac-result').classList.remove('hidden');
+    const phraseIdx = seed % conditionPhrases.length;
+
+    let baseEmoji = "", baseTitle = "", baseText = "";
+    if (type === "animal") {
+        const data = ZODIAC_ANIMAL_DATA_JA[key];
+        baseEmoji = data.emoji;
+        baseTitle = `今日お伝えする ${data.name} の大吉処方 (運勢指数: ${score}%)`;
+        baseText = `<strong class="text-amber-300">[今日の一日の総評]</strong> ${conditionPhrases[phraseIdx]}<br class="block mb-2"><strong class="text-amber-300">[開運の精密アドバイス]</strong> ${data.desc}`;
+    } else {
+        const data = ASTROLOGY_DATA_JA[key];
+        baseEmoji = data.emoji;
+        baseTitle = `今日お届けする ${key} の星占いオラクル (幸運指数: ${score}%)`;
+        baseText = `<strong class="text-cyan-300">[宇宙からの神聖なメッセージ]</strong> ${conditionPhrases[phraseIdx]}<br class="block mb-2"><strong class="text-cyan-300">[開運アクション]</strong> ${data.desc}`;
+    }
+
+    resEmoji.textContent = baseEmoji;
+    resTitle.textContent = baseTitle;
+    resDesc.innerHTML = baseText;
+    resultBox.classList.remove("hidden");
+    resultBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
-  function showBloodTypeReading(idx) {
-    const titleEl = document.getElementById('plaza-blood-title');
-    const descEl = document.getElementById('plaza-blood-desc');
-    const badgeEl = document.getElementById('plaza-blood-badge');
-    
-    const readings = [
-        "A型のあなた：今日のキーワードは「計画性と調和」です。細かな配慮が光り、周囲から絶大な信頼を得られる日。お勧めカラーはグリーンです。",
-        "B型のあなた：今日のキーワードは「個性とインスピレーション」です。枠にとらわれない独創的なアイデアが成功の鍵となります。お勧めカラーはイエローです。",
-        "O型のあなた：今日のキーワード는「情熱と実行力」です。目標に向かって力強く突き進むことで、大きな成果を勝ち取れます。お勧めカラーはレッドです。",
-        "AB型のあなた：今日のキーワードは「知的分析と冷静さ」です。感情に流されず冷静に状況を判断することで、最も賢い選択ができます。お勧めカラーはブルーです。"
-    ];
-    
-    titleEl.textContent = `🧬 血液型別開運アドバイス`;
-    descEl.textContent = readings[idx];
-    badgeEl.textContent = "血液型開運指数: " + (88 + (idx % 2) * 4) + "%";
-    document.getElementById('plaza-blood-result').classList.remove('hidden');
+  function showBloodTypeReading(bloodType) {
+    const resultBox = document.getElementById("zodiac-result-box");
+    const resEmoji = document.getElementById("zodiac-res-emoji");
+    const resTitle = document.getElementById("zodiac-res-title");
+    const resDesc = document.getElementById("zodiac-res-desc");
+    const resDate = document.getElementById("zodiac-res-date");
+    if (!resultBox || !resEmoji || !resTitle || !resDesc || !resDate) return;
+
+    const today = new Date();
+    resDate.textContent = `${today.getMonth() + 1}月 ${today.getDate()}日 今日の特別報`;
+    const seed = today.getFullYear() * 1000 + (today.getMonth() + 1) * 50 + today.getDate() + bloodType.charCodeAt(0);
+    const score = 80 + (seed % 20);
+
+    const data = DAILY_BLOOD_DATA_JA[bloodType];
+    const phraseIdx = seed % data.phrases.length;
+    const finalPhrase = data.phrases[phraseIdx];
+
+    resEmoji.textContent = data.emoji;
+    resTitle.textContent = `今日の ${data.name} 朝の運勢天気予報 (幸福度: ${score}%)`;
+    resDesc.innerHTML = `
+        <strong class="text-pink-400">[今日の血液型エネルギー気象図]</strong><br class="block mb-1.5">
+        <p class="leading-relaxed font-sans text-gray-200 text-xs sm:text-sm">${finalPhrase}</p>
+        <p class="pt-2 text-[10px] text-gray-500 border-t border-white/5 mt-2">※ 毎朝あなたの気分を心地よく満たす開運エネルギー予報を完全無料でお届けします。今すぐこのページをブックマーク（★）し、毎朝わずか3秒で本日の幸運パワーを充電してください！</p>
+    `;
+    resultBox.classList.remove("hidden");
+    resultBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   function calculateTrendyMatch() {
-    const scoreNum = document.getElementById('trendy-score-num');
-    const scoreStars = document.getElementById('trendy-score-stars');
-    const summaryDesc = document.getElementById('trendy-summary-desc');
+    const scoreNum = document.getElementById("trendy-score-num");
+    const scoreStars = document.getElementById("trendy-score-stars");
+    const summaryDesc = document.getElementById("trendy-summary-desc");
     
     const score = 85 + Math.floor(Math.random() * 15);
     scoreNum.textContent = `${score}点 / 100点`;
     scoreStars.textContent = score >= 95 ? "⭐⭐⭐⭐⭐ (ソウルメイト：奇跡的な相性)" : "⭐⭐⭐⭐ (最高の組み合わせ)";
     summaryDesc.textContent = "お二人の気質の配列は互いに補い合い、大いなる成長を促す理想的な相性です。一緒に過ごす時間が長くなるほど絆が深まります。";
-    document.getElementById('trendy-result-box').classList.remove('hidden');
+    document.getElementById("trendy-result-box").classList.remove("hidden");
   }
 
   function calculatePastLifeGame() {
-    const titleEl = document.getElementById('pastlife-game-title');
-    const descEl = document.getElementById('pastlife-game-desc');
+    const titleEl = document.getElementById("pastlife-game-title");
+    const descEl = document.getElementById("pastlife-game-desc");
     
     const stories = [
-        { title: "「王室の書庫を守っていた気高き大賢者」", desc: "前世におけるあなたは、知恵と真理を探求し、国政を左右する貴重な記録を守っていた宮廷の学者でした。現世におけるあなたの驚異的な分析力や優れた学習への情熱は、その魂の記憶が色濃く残っているためです。" },
-        { title: "「大自然を旅し、美を表現した風流な芸術家」", desc: "前世におけるあなたは、キャンバスを携えて世界中を巡り、大自然の神秘を詩や絵画で表現していた風流人でした。現世であなたが持つ洗練された感性と自由を愛する美しい心は、前世の魂が放つ輝きそのものです。" }
+        { title: "「王室의 書庫를 守りし気高き大賢者」", title: "「王室の書庫を守っていた気高き大賢者」", desc: "前世におけるあなたは、知恵と真理を探求し、国政を左右する貴重な記録を守っていた宮廷の学者でした。現世におけるあなたの驚異的な分析力や優れた学習への情熱は、その魂の記憶が色濃く残っているためです。" },
+        { title: "「大自然を旅し、美を表現した風流な芸術家」", desc: "前世におけるあなたは、キャンバス를 携えて世界中を巡り、大自然の神秘を詩や絵画で表現していた風流人でした。現世であなたが持つ洗練された感性と自由を愛する美しい心は、前世の魂が放つ輝きそのものです。" }
     ];
     
     const cur = stories[Math.floor(Math.random() * stories.length)];
     titleEl.textContent = cur.title;
     descEl.textContent = cur.desc;
-    document.getElementById('pastlife-game-result-box').classList.remove('hidden');
+    document.getElementById("pastlife-game-result-box").classList.remove("hidden");
   }
 
   // 12개월 탄생석/탄생화 처방 데이터
